@@ -1,0 +1,48 @@
+from pygame import mixer
+import datetime
+from time import time
+def play(file,stoper):        # FUNTION TO PLAY AND STOP THE ALARM
+    mixer.init()
+    mixer.music.load(file)
+    mixer.music.play()
+    while True:
+        com=input()
+        if com == stoper :
+            mixer.music.stop()
+            break
+        else:
+            print("please enter the valid input: ")
+            continue
+def take():                 #FUNCTION THAT WILL RETURN A TIME TO STORE IN THE TXT FILE
+    return datetime.datetime.now()
+def log(a):
+    with open("Health.txt","a") as f:
+        time2=take()
+        f.write(f"{a}{time2}\n")
+if __name__ == '__main__':    #Main function
+    init_water = time()
+    init_phy = time()
+    init_eye = time()
+    watersec = 34*60
+    eyesec = 90*60
+    physec = 45*60
+
+    while True:
+        if time()-init_water > watersec:               # time()-init_water will give me the time difference between the last time played and the real time.
+            print("Time to drink some water. Enter the Drank to stop the alarm: ")
+            stoping="drank"
+            play('pani peelo.mp3',stoping)
+            init_water=time()
+            log("Drank water at ")
+        if time()-init_eye > eyesec:
+            print("Time to do some eye exercise. Enter the Done to stop the alarm: ")
+            stoping="done"
+            play('Eye.mp3',stoping)
+            init_eye=time()
+            log("Eye exercise did at ")
+        if time()-init_phy > physec:
+            print("Time to do some physical exercise. Enter the Done to stop the alarm: ")
+            stoping="done"
+            play('exersice.mp3',stoping)
+            init_phy=time()
+            log("Physical exercise did at ")
